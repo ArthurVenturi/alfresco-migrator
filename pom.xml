@@ -4,22 +4,22 @@
   <artifactId>alfresco-migrator</artifactId>
   <version>0.1.0</version>
   <name>Alfresco Migrator</name>
-  <description>Alfresco Migrator project for SDK 4.6</description>
+  <description>Alfresco Migrator project for SDK 4.10</description>
   <packaging>pom</packaging>
   <prerequisites>
     <maven>3.3.0</maven>
   </prerequisites>
   <properties>
     <!-- Alfresco Maven Plugin version to use -->
-    <alfresco.sdk.version>4.6.0</alfresco.sdk.version>
+    <alfresco.sdk.version>4.10.0</alfresco.sdk.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Properties used in dependency declarations, you don't need to change these -->
     <alfresco.groupId>org.alfresco</alfresco.groupId>
     <alfresco.bomDependencyArtifactId>acs-community-packaging</alfresco.bomDependencyArtifactId>
-    <alfresco.platform.version>7.4.0.1</alfresco.platform.version>
+    <alfresco.platform.version>23.4.0</alfresco.platform.version>
     <alfresco.platform.docker.user>alfresco</alfresco.platform.docker.user>
-    <alfresco.share.version>20.165</alfresco.share.version>
-    <alfresco.share.docker.version>7.4.0.1</alfresco.share.docker.version>
+    <alfresco.share.version>23.4.0.46</alfresco.share.version>
+    <alfresco.share.docker.version>23.4.0</alfresco.share.docker.version>
     <!-- Docker images -->
     <docker.acs.image>alfresco/alfresco-content-repository-community</docker.acs.image>
     <docker.share.image>alfresco/alfresco-share</docker.share.image>
@@ -29,7 +29,7 @@
     <!-- Environment configuration properties -->
     <share.port>8180</share.port>
     <share.debug.port>9898</share.debug.port>
-    <acs.host>alfresco-migrator-acs</acs.host>
+    <acs.host>custom-export-import-action-23.x-acs</acs.host>
     <acs.port>8080</acs.port>
     <acs.debug.port>8888</acs.debug.port>
     <postgres.port>5555</postgres.port>
@@ -347,46 +347,9 @@
   </build>
   <profiles>
     <profile>
-      <id>java8</id>
-      <activation>
-        <jdk>[1.8,11.0)</jdk>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.0</version>
-            <configuration>
-              <source>1.8</source>
-              <target>1.8</target>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>java11</id>
-      <activation>
-        <jdk>[11.0,17)</jdk>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.0</version>
-            <configuration>
-              <release>11</release>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
       <id>java17</id>
       <activation>
-        <jdk>[17,)</jdk>
+        <jdk>[17,21)</jdk>
       </activation>
       <build>
         <plugins>
@@ -396,6 +359,24 @@
             <version>3.8.0</version>
             <configuration>
               <release>17</release>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>java21</id>
+      <activation>
+        <jdk>[21,)</jdk>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.0</version>
+            <configuration>
+              <release>21</release>
             </configuration>
           </plugin>
         </plugins>
