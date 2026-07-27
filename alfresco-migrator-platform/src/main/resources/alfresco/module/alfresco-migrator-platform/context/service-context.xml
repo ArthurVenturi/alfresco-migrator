@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!-- exporter Service bean declaration -->
+    <bean id="MigratorExporterService" class="org.alfresco.extension.repo.exporter.ExporterComponent">
+        <property name="namespaceService" ref="NamespaceService" />
+        <property name="dictionaryService" ref="DictionaryService" />
+        <property name="nodeService" ref="NodeService" />
+        <property name="searchService" ref="SearchService" />
+        <property name="contentService" ref="ContentService" />
+        <property name="descriptorService" ref="DescriptorService" />
+        <property name="authenticationService" ref="AuthenticationService" />
+        <property name="permissionService" ref="PermissionService" />
+        <property name="versionService" ref="VersionService" />
+        <property name="exportChunkSize" value="${rm.export.chunk.size}" />
+    </bean>
+
+    <!-- custom exporter action bean declaration  -->
+    <bean id="migratorExporter" class="org.alfresco.extension.repo.action.executer.ExporterActionExecuter"
+          parent="action-executer">
+        <property name="exporterService" ref="MigratorExporterService" />
+        <property name="mimetypeService" ref="MimetypeService" />
+        <property name="nodeService" ref="NodeService" />
+        <property name="contentService" ref="ContentService" />
+    </bean>
+
+    <!-- importer parser bean declaration -->
+    <bean id="MigratorViewParser" class="org.alfresco.extension.repo.importer.view.ViewParser">
+        <property name="namespaceService" ref="NamespaceService" />
+        <property name="nodeService" ref="NodeService" />
+        <property name="dictionaryService" ref="DictionaryService" />
+    </bean>
+
+     <!-- importer Service bean declaration -->
+    <bean id="MigratorImporterService" class="org.alfresco.extension.repo.importer.ImporterComponent">
+        <property name="namespaceService" ref="NamespaceService" />
+        <property name="dictionaryService" ref="DictionaryService" />
+        <property name="nodeService" ref="NodeService" />
+        <property name="contentService" ref="ContentService" />
+        <property name="ruleService" ref="RuleService" />
+        <property name="permissionService" ref="PermissionService" />
+        <property name="authorityService" ref="AuthorityService" />
+        <property name="viewParser" ref="MigratorViewParser" />
+        <property name="behaviourFilter" ref="policyBehaviourFilter" />
+        <property name="searchService" ref="searchService" />
+        <property name="ownableService" ref="ownableService" />
+        <property name="versionService" ref="VersionService" />
+        <property name="dbNodeService" ref="mtAwareNodeService" />
+        <property name="hiddenAspect" ref="hiddenAspect" />
+        <property name="contentUsageImpl" ref="contentUsageImpl" />
+    </bean>
+
+    <!-- custom importer action bean declaration -->
+    <bean id="migratorImporter" class="org.alfresco.extension.repo.action.executer.ImporterActionExecuter"
+          parent="action-executer">
+        <property name="importerService" ref="MigratorImporterService" />
+        <property name="nodeService" ref="NodeService" />
+        <property name="contentService" ref="ContentService" />
+        <property name="fileFolderService" ref="FileFolderService" />
+        <property name="defaultUuidBinding" value="${migrator.import.uuid.binding}" />
+    </bean>
+
+
+</beans>

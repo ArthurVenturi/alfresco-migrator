@@ -1,0 +1,16 @@
+<extension>
+  <modules>
+    <module>
+      <id>Alfresco Migrator UI - Export and Import</id>
+      <description>Expose the export and import custom actions UI</description>
+      <version>1.0</version>
+      <auto-deploy>true</auto-deploy>
+      <customizations>
+        <customization>
+          <targetPackageRoot>org.alfresco.share.pages.admin-console</targetPackageRoot>
+          <sourcePackageRoot>org.alfresco-migrator-share.components.console</sourcePackageRoot>
+        </customization>
+      </customizations>
+    </module>
+  </modules>
+</extension>
